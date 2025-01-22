@@ -14,7 +14,7 @@ EB - Spammer is a open source Mail Spammer
 
 Designed to spam fast and easy 
 
-# Usage 🔥
+## Usage 🔥
 EB - Spammer is very easy to use 
 just enter your email and app password 
 and you are ready to go 
@@ -107,11 +107,11 @@ cd IOS
 # configure the main file using nano 
 # And enter the email and app password 
 
-nano main.py
+nano ios.py
 
 # After configuration run the file 
 
-python3 main.py 
+python3 ios.py 
 
 ```
 
