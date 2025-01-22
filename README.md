@@ -113,13 +113,6 @@ It depends on the bug
 
 ## Troubleshooting ⚙️
 
-If you have an error that packages are missing go into the tools directory and 
-try the command : 
-
-```sh
-pip install -r requirements.txt
-```
-
 If you get an error that pip doesn’t exist 
 check your python version 
 try the command : 
