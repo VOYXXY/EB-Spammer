@@ -101,9 +101,6 @@ cd EB-Spammer
 pip install -r requirements.txt
 
 # use the iOS script 
-
-cd IOS 
-
 # configure the main file using nano 
 # And enter the email and app password 
 
