@@ -62,10 +62,6 @@ git clone https://github.com/VOYXXY/EB-Spammer.git
 
 cd EB-Spammer
 
-# Install all requirements 
-
-pip install -r requirements.txt
-
 # Configure the configuration file 
 # Run the script 
 
@@ -95,10 +91,6 @@ git clone https://github.com/VOYXXY/EB-Spammer.git
 # go into the tool directory 
 
 cd EB-Spammer
-
-# Install all requirements 
-
-pip install -r requirements.txt
 
 # use the iOS script 
 # configure the main file using nano 
