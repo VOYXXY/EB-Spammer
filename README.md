@@ -104,11 +104,11 @@ pip install -r requirements.txt
 # configure the main file using nano 
 # And enter the email and app password 
 
-nano ios.py
+nano IOS.py
 
 # After configuration run the file 
 
-python3 ios.py 
+python3 IOS.py 
 
 ```
 
