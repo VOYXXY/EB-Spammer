@@ -23,7 +23,7 @@ and you are ready to go
 EB - Spammer started a personal project to help me learn more about Cybersecurity and email such as Python 
 
 ## My Changelog 📁
-* New ACSSI Art
+* New ACSSI Art for IOS version
 * 
 * New Script 
 
