@@ -5,7 +5,6 @@ import sys
 import time
 import random
 
-# Konfiguration der Absenderinformationen
 senders_info = {
     'gmail': [
         ('example@gmail.com', 'password123'),
@@ -38,6 +37,7 @@ def print_ascii_art(art):
 BLUE = '\033[94m'
 RED = '\033[91m'
 WHITE = '\033[97m'
+ORANGE = '\033[93m'
 END = '\033[0m'
 
 def get_non_negative_integer(prompt):
@@ -75,6 +75,19 @@ def select_email_service():
         else:
             print(f"{RED}Invalid selection. Please enter 1, 2, or 3.{END}")
 
+def check_temporary_email(email):
+    if email.endswith('@msssg.com'):
+        print(f"{ORANGE}ATTENTION: This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n){END}")
+        while True:
+            choice = input().lower()
+            if choice == 'y':
+                return True
+            elif choice == 'n':
+                print(f"{RED}Process aborted by user.{END}")
+                sys.exit()
+            else:
+                print(f"{RED}Invalid input. Please enter 'y' or 'n'.{END}")
+
 email_service = select_email_service()
 
 if email_service == 'gmail':
@@ -85,6 +98,7 @@ else:
     smtp_port = 587
 
 recipient_email = get_non_empty_input("Recipient's email: ")
+check_temporary_email(recipient_email)  # Überprüfung auf temporäre E-Mail
 recipient_name = get_non_empty_input("Recipient's name: ")
 sender_alias = get_non_empty_input("Sender alias: ")
 number_of_emails_per_account = get_non_negative_integer("Number of emails per account: ")
