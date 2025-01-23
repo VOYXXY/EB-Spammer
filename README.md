@@ -169,4 +169,15 @@ My GitHub tool is protected under the GNU General Public License v3 (GPLv3).
 
 * Publishing my tool without permission is not allowed 
 
-* Publishing modified version with credits is allowed 
+* Publishing modified version with credits is allowed
+
+
+## Compatible with 💎
+
+PC : 
+linux 
+MacOS
+windows
+
+Phone : 
+IOS 
