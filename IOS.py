@@ -3,8 +3,8 @@ import smtplib
 from smtplib import SMTPAuthenticationError
 import sys
 import time
-import random
 
+# Konfiguration der Absenderinformationen
 senders_info = {
     'gmail': [
         ('example@gmail.com', 'password123'),
@@ -17,6 +17,28 @@ senders_info = {
 
 def clear_screen():
     os.system('clear')
+
+BLUE = '\033[94m'
+RED = '\033[91m'
+WHITE = '\033[97m'
+ORANGE = '\033[93m'
+END = '\033[0m'
+
+def loading_screen():
+    clear_screen()
+    print(f"{BLUE}Loading ...{END}")
+    time.sleep(2)  # Ladezeit simulieren
+    # Überprüfung der Konfiguration
+    for service, accounts in senders_info.items():
+        for email, password in accounts:
+            if "example@" in email:
+                print(f"{RED}Tool won’t work correctly, sender_info is not configured.{END}")
+                time.sleep(1)
+                print(f"{BLUE}Don’t forget to star our tool ⭐️{END}")
+                time.sleep(2)
+                return
+    print(f"{BLUE}Tool ready to use!{END}")
+    time.sleep(1)
 
 ART = """ ________  _______
 /        |/       \ 
@@ -33,12 +55,6 @@ def print_ascii_art(art):
     RED = '\033[91m'
     END = '\033[0m'
     print(f"{RED}{art}{END}")
-
-BLUE = '\033[94m'
-RED = '\033[91m'
-WHITE = '\033[97m'
-ORANGE = '\033[93m'
-END = '\033[0m'
 
 def get_non_negative_integer(prompt):
     while True:
@@ -76,7 +92,7 @@ def select_email_service():
             print(f"{RED}Invalid selection. Please enter 1, 2, or 3.{END}")
 
 def check_temporary_email(email):
-    if email.endswith('@msssg.com'):
+    if email.endswith('@msssg.com') or email.endswith('@bcooq.com'):
         print(f"{ORANGE}ATTENTION: This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n){END}")
         while True:
             choice = input().lower()
@@ -88,6 +104,9 @@ def check_temporary_email(email):
             else:
                 print(f"{RED}Invalid input. Please enter 'y' or 'n'.{END}")
 
+# Ladebildschirm und Konfigurationsprüfung
+loading_screen()
+
 email_service = select_email_service()
 
 if email_service == 'gmail':
@@ -98,7 +117,7 @@ else:
     smtp_port = 587
 
 recipient_email = get_non_empty_input("Recipient's email: ")
-check_temporary_email(recipient_email)  # Überprüfung auf temporäre E-Mail
+check_temporary_email(recipient_email)  # Überprüfung auf temporäre E-Mails
 recipient_name = get_non_empty_input("Recipient's name: ")
 sender_alias = get_non_empty_input("Sender alias: ")
 number_of_emails_per_account = get_non_negative_integer("Number of emails per account: ")
