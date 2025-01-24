@@ -62,7 +62,7 @@ git clone https://github.com/VOYXXY/EB-Spammer.git
 
 cd EB-Spammer
 
-# Configure the configuration file 
+# configure the main file
 # Run the script 
 
 python3 main.py
@@ -92,16 +92,19 @@ git clone https://github.com/VOYXXY/EB-Spammer.git
 
 cd EB-Spammer
 
-# use the iOS script 
 # configure the main file using nano 
 # And enter the email and app password 
 
-nano IOS.py
+nano main.py
 
 # After configuration run the file 
 
-python3 IOS.py 
+python3 maim.py
 
+```
+
+```sh
+https://github.com/VOYXXY/EB-Spammer.git
 ```
 
 ## Reporting Bugs 🐞 
@@ -125,6 +128,12 @@ If that doesn’t help and you use the tool on ISH shell , try the command :
 
 ```sh
 apk add py3-pip
+```
+
+if the passowrd for your google account is wrong , but you are sure its correct , be positive you use an app password that can be configured here :
+
+```sh
+https://myaccount.google.com/apppasswords
 ```
 
 ## Uninstall ☹️
