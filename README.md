@@ -45,6 +45,9 @@ Your mails won’t go into the spam folder
 [Fast-And-Easy]
 Our script is easy to use and sends emails fast 
 
+[10-Minutes-Mail-Detection] 
+Our script now detects some 10 minutes mail services
+
 ## User Interface 📲
 There are two main controls:
 
