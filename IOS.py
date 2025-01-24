@@ -4,7 +4,6 @@ from smtplib import SMTPAuthenticationError
 import sys
 import time
 
-# Konfiguration der Absenderinformationen
 senders_info = {
     'gmail': [
         ('example@gmail.com', 'password123'),
@@ -27,8 +26,7 @@ END = '\033[0m'
 def loading_screen():
     clear_screen()
     print(f"{BLUE}Loading ...{END}")
-    time.sleep(2)  # Ladezeit simulieren
-    # Überprüfung der Konfiguration
+    time.sleep(2)  
     for service, accounts in senders_info.items():
         for email, password in accounts:
             if "example@" in email:
@@ -104,7 +102,6 @@ def check_temporary_email(email):
             else:
                 print(f"{RED}Invalid input. Please enter 'y' or 'n'.{END}")
 
-# Ladebildschirm und Konfigurationsprüfung
 loading_screen()
 
 email_service = select_email_service()
