@@ -24,7 +24,8 @@ EB - Spammer started a personal project to help me learn more about Cybersecurit
 
 ## My Changelog 📁
 * New ACSSI Art for IOS version
-* 
+* Main file now runs on every system
+* IOS script removed 
 * New Script 
 
 ## My ToDo list💡
