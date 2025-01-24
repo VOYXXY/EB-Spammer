@@ -138,7 +138,7 @@ for sender_email, sender_password in senders_info[email_service]:
                 continue
 
             for _ in range(number_of_emails_per_account):
-                subject_line = f"Custom Email - {email_counter}"
+                subject_line = f"620@73@73@ - {email_counter}"
                 customized_message = f"""From: {sender_email}
 To: {recipient_email}
 Subject: {subject_line}
