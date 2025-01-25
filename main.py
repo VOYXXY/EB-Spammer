@@ -8,8 +8,8 @@ import random
 
 senders_info = {
     'gmail': [
-        ('anonymous.polandd@gmail.com', 'bzid niqv yqeo ocyl'),
-        ('jhjhjhjk@gmail.com', 'password123'),
+        ('example@gmail.com', 'password123'),
+        ('example@gmail.com', 'password123'),
     ],
     'outlook': [
         ('z7z7zz7@outlook.com', 'password1'),
