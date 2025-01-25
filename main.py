@@ -4,154 +4,245 @@ from smtplib import SMTPAuthenticationError
 import sys
 import time
 import random
-import socket
-import uuid
-import platform
-from config import senders_info
 
+
+senders_info = {
+    'gmail': [
+        ('example@gmail.com', 'password123'),
+        ('example@gmail.com', 'password123'),
+    ],
+    'outlook': [
+        ('example@outlook.com', 'password1'),
+    ],
+}
+
+
+BLUE = '\033[94m'
+GREEN = '\033[32m'
+RED = '\033[91m'
+WHITE = '\033[97m'
+CYAN = '\033[36m'
+ORANGE = '\033[93m'
+END = '\033[0m'
 
 def clear_screen():
-    if os.name == 'nt':  # Windows
-        os.system('cls')
-    else:  # macOS/Linux
-        os.system('clear')
-        sys.stdout.write("\033[8;27;85t")  # Resize terminal to 27 rows x 85 columns
+    os.system('clear')
 
+def loading_screen():
+    clear_screen()
+    print(f"{BLUE}Loading ...{END}")
+    time.sleep(2)
+    for service, accounts in senders_info.items():
+        for email, password in accounts:
+            if "example@" in email:
+                print(f"{RED}[-]{END}{CYAN}sender_info is not Configured, tool won't work{END}")
+                time.sleep(1)
+                print(f"{RED}[-]{END}{CYAN}Make sure the e-mail and AppPassword is correct{END}")
+                time.sleep(4)
+                print(f"{BLUE}Don’t forget to star our tool ⭐️{END}")
+                time.sleep(2)
+                print("https://github.com/VOYXXY/EB-Spammer/tree/main")
+                time.sleep(4)
+                return
+    time.sleep(1)
+    print(f"{BLUE}Don’t forget to star our tool ⭐️{END}")
+    time.sleep(1)
+    print("https://github.com/VOYXXY/EB-Spammer/tree/main")
+    time.sleep(1)
+    print(f"{GREEN}[+]{END}{CYAN}Tool ready to use ...[ ✔ ]{END}")
+    time.sleep(3)
 
-clear_screen()
-
-ART = """  __  __       _ _   ____                  _               
- |  \/  |     (_) | |  _ \                | |              
- | \  / | __ _ _| | | |_) | ___  _ __ ___ | |__   ___ _ __ 
- | |\/| |/ _` | | | |  _ < / _ \| '_ ` _ \| '_ \ / _ \ '__|
- | |  | | (_| | | | | |_) | (_) | | | | | | |_) |  __/ |   
- |_|  |_|\__,_|_|_| |____/ \___/|_| |_| |_|_.__/ \___|_|   
-                                                           
-                                                           """
-
+ART = """ 
+________  _______
+/        |/       \ 
+$$$$$$$$/ $$$$$$$  |
+$$ |__    $$ |__$$ |
+$$    |   $$    $$< 
+$$$$$/    $$$$$$$  |
+$$ |_____ $$ |__$$ |
+$$       |$$    $$/ 
+$$$$$$$$/ $$$$$$$/
+"""
 
 def print_ascii_art(art):
     RED = '\033[91m'
     END = '\033[0m'
-
-    terminal_size = os.get_terminal_size()
-    terminal_width = terminal_size.columns
-    art_lines = art.splitlines()
-
-    centered_art = "\n".join(
-        line.ljust(terminal_width) for line in art_lines
-    )
-    print(f"{RED}{centered_art}{END}")
-
-
-BLUE = '\033[94m'
-RED = '\033[91m'
-WHITE = '\033[97m'
-END = '\033[0m'
-
+    print(f"{RED}{art}{END}")
 
 def get_non_negative_integer(prompt):
     while True:
         try:
             print(f"{BLUE}{prompt}{END}", end='')
             value = input()
-            print(f"{RED}{value}{END}\n")  # Echo back the input in red
-            integer_value = int(value)
-            if integer_value < 0:
-                raise ValueError("The number cannot be negative.")
-            return integer_value
-        except ValueError as e:
-            print(f"{RED}Invalid input. Please enter a non-negative integer.\n{END}", str(e))
+            return int(value)
+        except ValueError:
+            print(f"{RED}[-]{END}{CYAN}Invalid input. Please enter a number.{END}")
 
-
-def get_non_empty_input(prompt, error_message="Input cannot be empty. Please try again."):
+def get_non_empty_input(prompt):
     while True:
         print(f"{BLUE}{prompt}{END}", end='')
         value = input().strip()
-        if not value:
-            print(f"{RED}{error_message}{END}\n")
-        else:
-            print(f"{RED}{value}{END}\n")  # Echo back the input in red
+        if value:
             return value
-
-
-def get_system_info():
-    user_ip = socket.gethostbyname(socket.gethostname())
-    user_mac = ':'.join(['{:02x}'.format((uuid.getnode() >> i) & 0xff)
-                         for i in range(0, 8 * 6, 8)][::-1])
-    user_os = platform.system()
-    return user_ip, user_mac, user_os
-
 
 def show_menu():
     print_ascii_art(ART)
-    print(f"{BLUE}Select which Email the recipient uses:{END}")
-    print(f"{RED}[1] Gmail")
-    print(f"[2] Outlook")
-    print(f"[3] Other")
-    print(f"[4] IP - Check{END}")
-
+    print()
+    print(f"{ORANGE}[!] Select a Template :{END}")
+    print()
+    print(f"{GREEN}[1]{END}{CYAN}Gmail")
+    print(f"{GREEN}[2]{END}{CYAN}Outlook")
+    print(f"{GREEN}[3]{END}{CYAN}Other")
+    print(f"{GREEN}[4]{END}{CYAN}OTP-OpenAI")
+    print()
 
 def select_email_service():
     while True:
         clear_screen()
         show_menu()
-        choice = input(f"{BLUE}Mail Server: {END}").strip()
-        if choice in ['1', '2', '3', '4']:
-            print(f"{RED}{choice}{END}\n")  # Optionally echo back the choice in red
+        choice = input(f"{GREEN}[>]{END}{CYAN}Mail Service : ").strip()
         if choice == '1':
             return 'gmail'
         elif choice == '2' or choice == '3':
             return 'outlook'
         elif choice == '4':
-            user_ip, user_mac, user_os = get_system_info()
-            print(f"{WHITE}IP: {user_ip}\nMAC: {user_mac}\nOS: {user_os}{END}")
-            print(f"{WHITE}This Information can be Exposed After Sending the mails. Make sure to use a VPN. The best Option is a TOR connection.{END}\n")
-            input(f"{BLUE}Press Enter to return to the menu...{END}")
+            return 'otp'
         else:
-            print(f"{RED}Invalid selection. Please enter 1, 2, 3, or 4.{END}\n")
+            print(f"{RED}[-]{END}{CYAN}Invalid input. Please enter a number.{END}")
 
+def check_temporary_email(email):
+    if email.endswith('@msssg.com') or email.endswith('@bcooq.com'):
+        print(f"{ORANGE}[!]This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n){END}")
+        while True:
+            choice = input().lower()
+            if choice == 'y':
+                return True
+            elif choice == 'n':
+                print(f"{RED}Process aborted by user.{END}")
+                sys.exit()
+            else:
+                print(f"{ORANGE}[!]Invalid input. Please enter 'y' or 'n'.{END}")
 
+def generate_otp():
+    return random.randint(100000, 999999)
+
+loading_screen()
 email_service = select_email_service()
 
 if email_service == 'gmail':
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-else: 
+elif email_service == 'outlook':
     smtp_server = 'smtp.office365.com'
     smtp_port = 587
+elif email_service == 'otp':
+    smtp_server = 'smtp.gmail.com'
+    smtp_port = 587
 
-sender_email, sender_password = random.choice(senders_info[email_service])
+print()
+recipient_email = get_non_empty_input(
+    f"{GREEN}[+]{END}{CYAN} Recipient's email: {END}"
+)
+check_temporary_email(recipient_email)
 
-recipient_email = get_non_empty_input("Please enter the recipient's email address: ")
-recipient_name = get_non_empty_input("What is the recipient's name?: ")
-sender_alias = get_non_empty_input("Enter the display name for the sender (IMPORTANT: DO NOT USE YOUR REAL NAME!): ")
-number_of_emails_per_account = get_non_negative_integer("How many emails would you like to send per account?: ")
-delay = get_non_negative_integer("Enter the delay (in seconds) between sending emails: ")
+if email_service == 'otp':
+    print()
+    number_of_emails_per_account = get_non_negative_integer(
+        f"{GREEN}[+]{END}{CYAN} Number of OTP emails to send: {END}"
+    )
+    delay = get_non_negative_integer(
+        f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between emails: {END}"
+    )
+    Link_openAI = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Link (OpenAI): {END}"
+    )
+    Link_HelpCenter = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Link (HelpCenter): {END}"
+    )
 
-message_body = get_non_empty_input("Enter the content of your email message: ")
+    for sender_email, sender_password in senders_info['gmail']:
+        email_counter = 1
+        print(f"{GREEN}[+]{END}{CYAN} Sending from {sender_email}{END}")
+        try:
+            with smtplib.SMTP(smtp_server, smtp_port) as server:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+                try:
+                    server.login(sender_email, sender_password)
+                    print()
+                    print(f"{GREEN}[+]{END}{CYAN} Login successful..[ ✔ ]{END}")
+                except SMTPAuthenticationError:
+                    print(f"{RED}[-]{END}{CYAN} Login failed for {sender_email}.{END}")
+                    continue
 
-for sender_email, sender_password in senders_info[email_service]:
-    email_counter = 1
-    print(f"{RED}Sending from {sender_email}\n{END}")
-    
-    try:
-        with smtplib.SMTP(smtp_server, smtp_port) as server:
-            server.ehlo()
-            server.starttls()
-            server.ehlo()
-            try:
-                server.login(sender_email, sender_password)
-                print(f"{RED}Login successful. Preparing to send emails...\n{END}")
-                input(f"{WHITE}Emails Ready, Press enter to deploy {END}")
-            except SMTPAuthenticationError:
-                print(f"{RED}Failed to send email from {sender_email}. The username or password might be incorrect. Make sure to add an app password, not your real one{END}\n")
-                continue
+                for _ in range(number_of_emails_per_account):
+                    otp_code = generate_otp()
+                    customized_message = f"""From: ChatGTP<{sender_email}>
+To: {recipient_email}
+Subject: Your Code for ChatGPT: {otp_code}
 
-            for _ in range(number_of_emails_per_account):
-                subject_line = f"Custom Email - {email_counter}"
-                
-                customized_message = f"""From: {sender_email}
+Your code for ChatGPT: {otp_code}
+
+Please enter this temporary verification code to continue:
+
+{otp_code}
+
+If you did not attempt to create a ChatGPT account, please ignore this email.
+
+Best regards,
+The ChatGPT Team
+
+ChatGPT {Link_openAI}
+
+Help Center {Link_HelpCenter}
+"""
+                    server.sendmail(sender_email, recipient_email, customized_message.encode('utf-8'))
+                    print(f"{GREEN}[+]{END}{CYAN}OTP Email {email_counter} sent to {recipient_email}.{END}")
+                    time.sleep(delay)
+                    email_counter += 1
+
+        except Exception as e:
+            print(f"Error: {e}")
+
+else:
+    recipient_name = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Recipient's name: {END}"
+    )
+    sender_alias = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Sender alias: {END}"
+    )
+    number_of_emails_per_account = get_non_negative_integer(
+        f"{GREEN}[+]{END}{CYAN} Number of emails per account: {END}"
+    )
+    delay = get_non_negative_integer(
+        f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between emails: {END}"
+    )
+    message_body = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Email message content: {END}"
+    )
+    subject_line = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Enter subject line: {END}"
+    )
+
+    for sender_email, sender_password in senders_info[email_service]:
+        email_counter = 1
+        print(f"{GREEN}[+]{END}{CYAN} Sending from {sender_email}{END}")
+        try:
+            with smtplib.SMTP(smtp_server, smtp_port) as server:
+                server.ehlo()
+                server.starttls()
+                server.ehlo()
+                try:
+                    server.login(sender_email, sender_password)
+                    print()
+                    print(f"{GREEN}[+]{END}{CYAN} Login successful..[ ✔ ]{END}")
+                except SMTPAuthenticationError:
+                    print(f"{RED}[-]{END}{CYAN} Login failed for {sender_email}.{END}")
+                    continue
+
+                for _ in range(number_of_emails_per_account):
+                    customized_message = f"""From: {sender_alias}<{sender_email}>
 To: {recipient_email}
 Subject: {subject_line}
 
@@ -160,18 +251,14 @@ Hello {recipient_name}!
 {message_body}
 
 Warm regards,
-
 {sender_alias}
 """
-                server.sendmail(sender_email, recipient_email, customized_message.encode('utf-8'))
-                print(f"{RED}Email {email_counter} from {sender_email} to {recipient_email} has been sent.\n{END}")
-                time.sleep(delay)
-                email_counter += 1
+                    server.sendmail(sender_email, recipient_email, customized_message.encode('utf-8'))
+                    print(f"{GREEN}[+]{END}{CYAN}Email {email_counter} sent to {recipient_email}.{END}")
+                    time.sleep(delay)
+                    email_counter += 1
 
-    except Exception as e:
-        print(f"An error occurred: {e}\n")
-        
-    if len(senders_info[email_service]) > 1:
-        print("Preparing next sender...\n")
+        except Exception as e:
+            print(f"Error: {e}")
 
-print(f"{RED}Process completed.\n{END}")
+print(f"{ORANGE}[!] Process completed.{END}")
