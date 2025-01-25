@@ -8,11 +8,11 @@ import random
 
 senders_info = {
     'gmail': [
-        ('example@gmail.com', 'password123'),
-        ('example@gmail.com', 'password123'),
+        ('anonymous.polandd@gmail.com', 'bzid niqv yqeo ocyl'),
+        ('jhjhjhjk@gmail.com', 'password123'),
     ],
     'outlook': [
-        ('example@outlook.com', 'password1'),
+        ('z7z7zz7@outlook.com', 'password1'),
     ],
 }
 
@@ -31,14 +31,14 @@ def clear_screen():
 def loading_screen():
     clear_screen()
     print(f"{BLUE}Loading ...{END}")
-    time.sleep(2)
+    time.sleep(1)
     for service, accounts in senders_info.items():
         for email, password in accounts:
             if "example@" in email:
                 print(f"{RED}[-]{END}{CYAN}sender_info is not Configured, tool won't work{END}")
                 time.sleep(1)
                 print(f"{RED}[-]{END}{CYAN}Make sure the e-mail and AppPassword is correct{END}")
-                time.sleep(4)
+                time.sleep(1)
                 print(f"{BLUE}Don’t forget to star our tool ⭐️{END}")
                 time.sleep(2)
                 print("https://github.com/VOYXXY/EB-Spammer/tree/main")
@@ -93,14 +93,14 @@ def show_menu():
     print(f"{GREEN}[1]{END}{CYAN}Gmail")
     print(f"{GREEN}[2]{END}{CYAN}Outlook")
     print(f"{GREEN}[3]{END}{CYAN}Other")
-    print(f"{GREEN}[4]{END}{CYAN}OTP-OpenAI")
+    print(f"{GREEN}[4]{END}{CYAN}OTP")
     print()
 
 def select_email_service():
     while True:
         clear_screen()
         show_menu()
-        choice = input(f"{GREEN}[>]{END}{CYAN}Mail Service : ").strip()
+        choice = input(f"{GREEN}[>]{END}{CYAN} Mail Service : ").strip()
         if choice == '1':
             return 'gmail'
         elif choice == '2' or choice == '3':
@@ -108,11 +108,11 @@ def select_email_service():
         elif choice == '4':
             return 'otp'
         else:
-            print(f"{RED}[-]{END}{CYAN}Invalid input. Please enter a number.{END}")
+            print(f"{RED}[-]{END}{CYAN} Invalid input. Please enter a number.{END}")
 
 def check_temporary_email(email):
     if email.endswith('@msssg.com') or email.endswith('@bcooq.com'):
-        print(f"{ORANGE}[!]This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n){END}")
+        print(f"{ORANGE}[!] This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n){END}")
         while True:
             choice = input().lower()
             if choice == 'y':
@@ -121,7 +121,7 @@ def check_temporary_email(email):
                 print(f"{RED}Process aborted by user.{END}")
                 sys.exit()
             else:
-                print(f"{ORANGE}[!]Invalid input. Please enter 'y' or 'n'.{END}")
+                print(f"{ORANGE}[!] Invalid input. Please enter 'y' or 'n'.{END}")
 
 def generate_otp():
     return random.randint(100000, 999999)
@@ -153,13 +153,16 @@ if email_service == 'otp':
     delay = get_non_negative_integer(
         f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between emails: {END}"
     )
-    Link_openAI = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Link (OpenAI): {END}"
+    company = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Company name: {END}"
+    )
+    Link_No = get_non_empty_input(
+        f"{GREEN}[+]{END}{CYAN} Link : {END}"
     )
     Link_HelpCenter = get_non_empty_input(
         f"{GREEN}[+]{END}{CYAN} Link (HelpCenter): {END}"
     )
-
+    
     for sender_email, sender_password in senders_info['gmail']:
         email_counter = 1
         print(f"{GREEN}[+]{END}{CYAN} Sending from {sender_email}{END}")
@@ -180,20 +183,20 @@ if email_service == 'otp':
                     otp_code = generate_otp()
                     customized_message = f"""From: ChatGTP<{sender_email}>
 To: {recipient_email}
-Subject: Your Code for ChatGPT: {otp_code}
+Subject: Your Code for {company}: {otp_code}
 
-Your code for ChatGPT: {otp_code}
+Your code for {company}: {otp_code}
 
 Please enter this temporary verification code to continue:
 
 {otp_code}
 
-If you did not attempt to create a ChatGPT account, please ignore this email.
+If you did not attempt to create a {company} account, please ignore this email.
 
 Best regards,
-The ChatGPT Team
+The {company} Team
 
-ChatGPT {Link_openAI}
+{company} {Link_No}
 
 Help Center {Link_HelpCenter}
 """
