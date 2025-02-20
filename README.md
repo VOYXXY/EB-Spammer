@@ -33,11 +33,8 @@ EB - Spammer started a personal project to help me learn more about Cybersecurit
 ## My ToDo list💡
 * ideas?
 * 
-* More colors
-* 
-* Better IOS version
-* 
-* Windows and MAC os optimized 
+* Account mass report
+* More spam 
 
 ## Features ⚙️
 
