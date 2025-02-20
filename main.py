@@ -11,6 +11,10 @@ from config import senders_info, discord_token
 import logging
 from datetime import datetime
 
+GITHUB_REPO = "VOYXXY/EB-Spammer"
+GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/releases/latest"
+LOCAL_VERSION_FILE = "local_version.txt"
+
 BLUE = '\033[94m'
 GREEN = '\033[32m'
 RED = '\033[91m'
@@ -25,6 +29,33 @@ def clear_screen():
     else:
         os.system('clear') 
 
+def get_latest_github_version():
+    try:
+        response = requests.get(GITHUB_API_URL, timeout=5)
+        if response.status_code == 200:
+            return response.json().get("tag_name", "Unknown")
+    except requests.RequestException as e:
+        print(f"{RED}[-] Error Getting latest github version : {e}{END}")
+    return None
+
+def get_local_version():
+    if os.path.exists(LOCAL_VERSION_FILE):
+        with open(LOCAL_VERSION_FILE, "r") as f:
+            return f.read().strip()
+    return "Unknown"
+
+def check_for_updates():
+    print(f"{CYAN}[~] Checking for updates...{END}")
+    latest_version = get_latest_github_version()
+    local_version = get_local_version()
+    
+    if latest_version and latest_version != local_version:
+        print(f"{GREEN}[+] Update Available , Version : {latest_version}{END}")
+        with open(LOCAL_VERSION_FILE, "w") as f:
+            f.write(latest_version)
+    else:
+        print(f"{BLUE}[✔] You have the newest version  ({local_version}){END}")
+
 def loading_screen():
     clear_screen()
     print(f"{BLUE}Loading ...{END}")
@@ -38,15 +69,13 @@ def loading_screen():
                 time.sleep(1)
                 print(f"{BLUE}Don’t forget to star our tool ⭐️{END}")
                 time.sleep(2)
-                print("https://github.com/VOYXXY/EB-Spammer/tree/main")
-                time.sleep(4)
+                check_for_updates()
                 return
     time.sleep(1)
     print(f"{BLUE}Don’t forget to star our tool ⭐️{END}")
     time.sleep(1)
-    print("https://github.com/VOYXXY/EB-Spammer/tree/main")
-    time.sleep(1)
     print(f"{GREEN}[+]{END}{CYAN}Tool ready to use ...[ ✔ ]{END}")
+    check_for_updates()
     time.sleep(3)
 
 ART = """ 
