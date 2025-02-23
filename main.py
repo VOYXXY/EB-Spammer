@@ -176,6 +176,16 @@ loading_screen()
 email_service = select_email_service()
 print(f"DEBUG: Selected email service = {email_service}")
 
+#if email_service == 'gmail':
+#    smtp_server = 'smtp.gmail.com'
+#    smtp_port = 587
+#elif email_service == 'outlook':
+#    smtp_server = 'smtp.office365.com'
+#    smtp_port = 587
+#elif email_service == 'otp':
+   # smtp_server = 'smtp.gmail.com'
+  #  smtp_port = 587
+
 if email_service == 'gmail':
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
@@ -185,6 +195,13 @@ elif email_service == 'outlook':
 elif email_service == 'otp':
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
+elif email_service == 'dc':
+    print("Discord Webhook .")
+elif email_service == 'dcDM':
+    print("Discord Direct Message .")
+else:
+    print(f"[-] Invalid choice: {email_service}")  
+    exit(0)
 
 
 print()
