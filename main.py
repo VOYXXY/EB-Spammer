@@ -318,9 +318,9 @@ if email_service == 'dcDM':
 
     print("[+] DM spam completed.")
     exit(0)
-else:
-    print("[-] Invalid choice.")
-    exit(0)
+#else:
+#    print("[-] Invalid choice.")
+  #  exit(0)
 
 print()
 recipient_email = get_non_empty_input(
