@@ -174,6 +174,7 @@ def generate_otp():
 
 loading_screen()
 email_service = select_email_service()
+print(f"DEBUG: Selected email service = {email_service}")
 
 if email_service == 'gmail':
     smtp_server = 'smtp.gmail.com'
