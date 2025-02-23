@@ -51,8 +51,6 @@ def check_for_updates():
     
     if latest_version and latest_version != local_version:
         print(f"{GREEN}[+] Update Available , Version : {latest_version}{END}")
-        with open(LOCAL_VERSION_FILE, "w") as f:
-            f.write(latest_version)
     else:
         print(f"{BLUE}[✔] You have the newest version  ({local_version}){END}")
 
@@ -102,14 +100,16 @@ def get_non_negative_integer(prompt):
             value = input()
             return int(value)
         except ValueError:
-            print(f"{RED}[-]{END}{CYAN}Invalid input. Please enter a number.{END}")
+            print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END}Invalid input. Please enter a number.")
 
 def get_non_empty_input(prompt):
     while True:
-        print(f"{BLUE}{prompt}{END}", end='')
-        value = input().strip()
+        print(f"{BLUE}{prompt}{END}", end=' ')
+        value = input(f"{CYAN}").strip() 
+        print(END, end="")  
         if value:
             return value
+
 
 def MassDM(token, chunk, message, num_messages, delay, target_user):
     for channel in channels:
@@ -130,19 +130,19 @@ def show_menu():
     print()
     print(f"{ORANGE}[!] Select a Template :{END}")
     print()
-    print(f"{GREEN}[1]{END}{CYAN}Gmail")                    
-    print(f"{GREEN}[2]{END}{CYAN}Outlook")
-    print(f"{GREEN}[3]{END}{CYAN}Other")
-    print(f"{GREEN}[4]{END}{CYAN}OTP")
-    print(f"{GREEN}[5]{END}{CYAN}Discord-Webhook")
-    print(f"{GREEN}[6]{END}{CYAN}Discord-DM")
+    print(f"{RED}[{END}{ORANGE}1{END}{RED}]{END} {CYAN}Gmail{END}")                   
+    print(f"{RED}[{END}{ORANGE}2{END}{RED}]{END} {CYAN}Outlook{END}")
+    print(f"{RED}[{END}{ORANGE}3{END}{RED}]{END} {CYAN}Others{END}")
+    print(f"{RED}[{END}{ORANGE}4{END}{RED}]{END} {CYAN}OTP{END}")
+    print(f"{RED}[{END}{ORANGE}5{END}{RED}]{END} {CYAN}Discord Webhook{END}")
+    print(f"{RED}[{END}{ORANGE}6{END}{RED}]{END} {CYAN}Discord DM{END}")
     print()
 
 def select_email_service():
     while True:
         clear_screen()
         show_menu()
-        choice = input(f"{GREEN}[>]{END}{CYAN} Mail Service : ").strip()
+        choice = input(f"{RED}[{END} EB-Spammer {RED}]{END} >> ").strip()
         if choice == '1':
             return 'gmail'
         elif choice == '2' or choice == '3':
@@ -154,11 +154,11 @@ def select_email_service():
         elif choice == '6':
             return 'dcDM'
         else:
-            print(f"{RED}[-]{END}{CYAN} Invalid input. Please enter a number.{END}")
+            print(f"{RED}[{ORANGE}-{END}{RED}]{END} Invalid input. Please enter a number.")
 
 def check_temporary_email(email):
     if email.endswith('@msssg.com') or email.endswith('@bcooq.com'):
-        print(f"{ORANGE}[!] This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n){END}")
+        print(f"{RED}[{END}{ORANGE}!{END}{RED}]{END} This mail is possibly owned by a 10-minute mail service. Do you wish to continue anyways? (y/n)")
         while True:
             choice = input().lower()
             if choice == 'y':
@@ -167,7 +167,7 @@ def check_temporary_email(email):
                 print(f"{RED}Process aborted by user.{END}")
                 sys.exit()
             else:
-                print(f"{ORANGE}[!] Invalid input. Please enter 'y' or 'n'.{END}")
+                print(f"{RED}[{END}{ORANGE}!{END}{RED}]{END} Invalid input. Please enter 'y' or 'n'.")
 
 def generate_otp():
     return random.randint(100000, 999999)  
@@ -184,30 +184,27 @@ elif email_service == 'outlook':
 elif email_service == 'otp':
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-else:
-    print(f"[-] Invalid choice: {email_service}")  
-    exit(0)
 
 print()
 if email_service == 'dc':
     print()
     webhook_url = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Webhook URL: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Webhook URL: "
     )
     number_of_messages = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Number of Messages to send: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Number of Messages to send: "
     )
     delay = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between Messages: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Delay (in seconds) between Messages: "
     )
     message = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Message : {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Message : "
     )
     webhook_name = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Webhook Name  : {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Webhook Name  : "
     )
     random_name_per_message = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Random name per message (y/n): {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Random name per message {ORANGE}({END}{GREEN}y{END}/{RED}n{END}{ORANGE}){END}: "
     ).lower() == 'y'
 
     random_names = []
@@ -219,7 +216,7 @@ if email_service == 'dc':
             print("random_name.txt not found in 'src' directory.")
 
     delete_webhook = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Do you want to delete the webhook after sending all messages? (y/n): {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Do you want to delete the webhook after sending all messages? {ORANGE}({END}{GREEN}y{END}/{RED}n{END}{ORANGE}){END}: "
     ).lower() == 'y'
 
     for i in range(number_of_messages):
@@ -232,9 +229,9 @@ if email_service == 'dc':
         try:
             response = requests.post(webhook_url, json=data)
             if response.status_code == 204:
-                print(f"{GREEN}[+]{END}{CYAN}Message {i+1} sent to {webhook_url}.{END}")
+                print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Message {i+1} sent to {webhook_url}.")
             else:
-                print(f"{RED}[-]{END}{CYAN} Failed to send message {i+1}. Status code: {response.status_code}{END}")
+                print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END}Failed to send message {i+1}. Status code: {response.status_code}")
         except requests.exceptions.RequestException as e:
             print(f"Error: {e}")
 
@@ -244,9 +241,9 @@ if email_service == 'dc':
         try:
             delete_response = requests.delete(webhook_url)
             if delete_response.status_code == 204:
-                print(f"{GREEN}[+]{END}{CYAN}Webhook deleted after sending all messages.{END}")
+                print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Webhook deleted after sending all messages.")
             else:
-                print(f"{RED}[-]{END}{CYAN} Failed to delete webhook. Status code: {delete_response.status_code}{END}")
+                print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END}Failed to delete webhook. Status code: {delete_response.status_code}{END}")
         except requests.exceptions.RequestException as e:
             print(f"Error while deleting the webhook: {e}")
 
@@ -257,16 +254,16 @@ if email_service == 'dcDM':
     print()
     token = discord_token['token'][0]
     num_messages = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Number of Messages to send: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Number of Messages to send: "
     )
     delay = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between Messages: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Delay (in seconds) between Messages: "
     )
     message = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Message: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Message: "
     )
     target_user = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} All friends or userID (all/ID): {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} All friends or userID (all/ID): "
     )
 
     validityTest = requests.get(
@@ -275,8 +272,7 @@ if email_service == 'dcDM':
     )
 
     if validityTest.status_code != 200:
-        print("[-] Invalid Discord Account token")
-        input(f"{ORANGE}[!] Press Enter to exit...{END}")
+        print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END} Invalid Discord Account token")
         exit(0)
 
     channels = requests.get(
@@ -285,7 +281,7 @@ if email_service == 'dcDM':
     ).json()
 
     if not channels:
-        print("[-] No DM channels found.")
+        print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END} No DM channels found.")
         input(f"{ORANGE}[!] Press Enter to exit...{END}")
         exit(0)
 
@@ -293,7 +289,7 @@ if email_service == 'dcDM':
         channels = [channel for channel in channels if "recipients" in channel and any(user["id"] == target_user for user in channel["recipients"])]
 
         if not channels:
-            print("[-] No matching DM channel found for the given userID.")
+            print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END} No matching DM channel found for the given userID.")
             input(f"{ORANGE}[!] Press Enter to exit...{END}")
             exit(0)
 
@@ -302,37 +298,35 @@ if email_service == 'dcDM':
 
     print("[+] DM spam completed.")
     exit(0)
-#else:
-#    print("[-] Invalid choice.")
-  #  exit(0)
+
 
 print()
 recipient_email = get_non_empty_input(
-    f"{GREEN}[+]{END}{CYAN} Recipient's email: {END}"
+    f"{RED}[{END}{GREEN}+{END}{RED}]{END} Recipient's email: "
 )
 check_temporary_email(recipient_email)
 
 if email_service == 'otp':
     print()
     number_of_emails_per_account = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Number of OTP emails to send: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Number of OTP emails to send: "
     )
     delay = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between emails: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Delay (in seconds) between emails: "
     )
     company = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Company name: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Company name: "
     )
     Link_No = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Link : {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Link : "
     )
     Link_HelpCenter = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Link (HelpCenter): {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Link (HelpCenter): "
     )
     
     for sender_email, sender_password in senders_info['gmail']:
         email_counter = 1
-        print(f"{GREEN}[+]{END}{CYAN} Sending from {sender_email}{END}")
+        print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Sending from {sender_email}")
         try:
             with smtplib.SMTP(smtp_server, smtp_port) as server:
                 server.ehlo()
@@ -341,14 +335,14 @@ if email_service == 'otp':
                 try:
                     server.login(sender_email, sender_password)
                     print()
-                    print(f"{GREEN}[+]{END}{CYAN} Login successful..[ ✔ ]{END}")
+                    print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Login successful..{RED}[{END}{GREEN} ✔ {RED}]{END}")
                 except SMTPAuthenticationError:
-                    print(f"{RED}[-]{END}{CYAN} Login failed for {sender_email}.{END}")
+                    print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END} Login failed for {sender_email}")
                     continue
 
                 for _ in range(number_of_emails_per_account):
                     otp_code = generate_otp()
-                    customized_message = f"""From: ChatGTP<{sender_email}>
+                    customized_message = f"""From: {company}<{sender_email}>
 To: {recipient_email}
 Subject: Your Code for {company}: {otp_code}
 
@@ -368,7 +362,7 @@ The {company} Team
 Help Center {Link_HelpCenter}
 """
                     server.sendmail(sender_email, recipient_email, customized_message.encode('utf-8'))
-                    print(f"{GREEN}[+]{END}{CYAN}OTP Email {email_counter} sent to {recipient_email}.{END}")
+                    print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} OTP Email {email_counter} sent to {recipient_email}.")
                     time.sleep(delay)
                     email_counter += 1
 
@@ -377,27 +371,27 @@ Help Center {Link_HelpCenter}
 
 else:
     recipient_name = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Recipient's name: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Recipient's name:  "
     )
     sender_alias = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Sender alias: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Sender alias: "
     )
     number_of_emails_per_account = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Number of emails per account: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Number of emails per account: "
     )
     delay = get_non_negative_integer(
-        f"{GREEN}[+]{END}{CYAN} Delay (in seconds) between emails: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Delay (in seconds) between emails: "
     )
     message_body = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Email message content: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END}Email message content: "
     )
     subject_line = get_non_empty_input(
-        f"{GREEN}[+]{END}{CYAN} Enter subject line: {END}"
+        f"{RED}[{END}{GREEN}+{END}{RED}]{END} Enter subject line: "
     )
 
     for sender_email, sender_password in senders_info[email_service]:
         email_counter = 1
-        print(f"{GREEN}[+]{END}{CYAN} Sending from {sender_email}{END}")
+        print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Sending from {sender_email}")
         try:
             with smtplib.SMTP(smtp_server, smtp_port) as server:
                 server.ehlo()
@@ -406,9 +400,10 @@ else:
                 try:
                     server.login(sender_email, sender_password)
                     print()
-                    print(f"{GREEN}[+]{END}{CYAN} Login successful..[ ✔ ]{END}")
+                    print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Login successful..{RED}[{END}{GREEN} ✔ {RED}]{END}")
+                    print()
                 except SMTPAuthenticationError:
-                    print(f"{RED}[-]{END}{CYAN} Login failed for {sender_email}.{END}")
+                    print(f"{RED}[{END}{ORANGE}-{END}{RED}]{END} Login failed for {sender_email}.")
                     continue
 
                 for _ in range(number_of_emails_per_account):
@@ -424,7 +419,7 @@ Warm regards,
 {sender_alias}
 """
                     server.sendmail(sender_email, recipient_email, customized_message.encode('utf-8'))
-                    print(f"{GREEN}[+]{END}{CYAN}Email {email_counter} sent to {recipient_email}.{END}")
+                    print(f"{RED}[{END}{GREEN}+{END}{RED}]{END} Email {email_counter} sent to {recipient_email}.")
                     time.sleep(delay)
                     email_counter += 1
 
