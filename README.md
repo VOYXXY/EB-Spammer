@@ -161,35 +161,12 @@ If still nothing works check the file name , maybe iam to dumb
 
 On pc u can just right click and delete the file 
 
-## Want to help ?
-
-You can help on this project by downloading the tool , changing the source code until u are satisfied with it , and open a issue 
-
-We will have a look into the new code and discuss further 
-
-Please do not publish your modified version without credits 
-
-( This GitHub tool is protected under the (GPLv3) )  
-
 ## Important information ℹ️ 
 
 I , the creator of this tool am not responsible for any damage or harm caused by this tool 
 
-My GitHub tool is protected under the GNU General Public License v3 (GPLv3).
-
-* Editing my tool for private use is allowed 
-
-* Publishing my tool without permission is not allowed 
-
-* Publishing modified version with credits is allowed
-
 
 ## Compatible with 💎
 
-PC : 
-linux 
-MacOS
-windows
-
-Phone : 
-IOS 
+any system
+(including IPhone)
