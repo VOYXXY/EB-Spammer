@@ -31,8 +31,6 @@ EB - Spammer started a personal project to help me learn more about Cybersecurit
 ## My ToDo list💡
 * ideas?
 * 
-* Account mass report
-* More spam 
 
 ## Features ⚙️
 
