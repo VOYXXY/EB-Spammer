@@ -146,12 +146,6 @@ because you don’t trust us , or the tool dosent work for you , we totally unde
 
 use this command , to delete our tool from ISH shell 
 
-```sh
-rm -r EB-Spammer
-```
-
-if that dosent work try : 
-
 ```sh 
 rm -rf EB-Spammer
 ```
