@@ -14,8 +14,6 @@ EB - Spammer is a open source Mail Spammer
 
 Designed to spam fast and easy 
 
-https://eb-spammer.web.app/
-
 ## Usage 🔥
 EB - Spammer is very easy to use 
 just enter your email and app password 
